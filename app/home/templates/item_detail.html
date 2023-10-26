@@ -1,0 +1,17 @@
+{% extends 'simple_ec.base.html' %}
+
+{% block content %}
+	<h4>商品名</h4>
+	<p>{{ item.name }}</p>
+	<br>
+	<h4>商品説明<h4>
+	<p>{{ item.description }}</p>
+	<br>
+	<h4>価格</h4>
+	<p>{{ item.price }}</p>
+	<br>
+	<h4>在庫</h4>
+	<p>{{ item.stock }}</p>
+	<br>
+	<a href="{% url:= 'home:index' %}"> go main page </a>
+{% endblock %}

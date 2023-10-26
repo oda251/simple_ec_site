@@ -1,0 +1,59 @@
+version: '3'
+services:
+  web:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./html:/usr/share/nginx/html
+      - ./logs/nginx:/var/log/nginx
+    environment:
+      - TZ=Asia/Tokyo
+    depends_on:
+      - app
+    networks:
+      - net
+    tty:
+      true
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image:
+      simple_ec
+    command:
+      uwsgi --ini /app/uwsgi.ini
+    volumes:
+      - ./app:/app
+      - ./logs/uwsgi.log:/var/log/uwsgi/uwsgi.log
+      - ./logs/django:/var/logs/django
+    depends_on:
+      - db
+    expose:
+      - 8000
+    environment:
+      - SECRET_KEY=test
+      - DB_HOST=db
+      - DB_NAME=simple_ec
+      - DB_USER=test
+      - DB_PASS=test
+      - TZ=Asia/Tokyo
+    networks:
+      - net
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: simple_ec
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      TZ: Asia/Tokyo
+    volumes:
+      - ./mysql:/var/lib/mysql
+    expose:
+      - 3306
+    networks:
+      - net
+networks:
+  net:
