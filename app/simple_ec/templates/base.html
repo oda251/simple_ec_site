@@ -10,16 +10,29 @@
         <h1>Simple EC</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'home:index' %}">Home</a></li>
+								<li><a href="{% url 'home:item_post' %}">Add Item</a></li>
+								{% if user.is_authenticated %}
+								<li><a>User: {{ user.get_username }}</a></li>
+								<li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+								<li><a href="{% url 'cart:cart' %}">Cart</a></li>
+								{% else %}
+								<li><a href="{% url 'accounts:login' %}">Login</a></li>
+								{% endif %}
             </ul>
         </nav>
     </header>
+		<hr>
     <main>
         {% block content %}
         {% endblock %}
     </main>
+		<hr>
     <footer>
 				<p>Simple EC</p>
+				<ul>
+					<li><a href="{% url 'home:index' %}">Home</a></li>
+					<li><a href="{% url 'home:bought_log' %}">Bought Log</a></li>
+				</ul>
     </footer>
 </body>
 </html>

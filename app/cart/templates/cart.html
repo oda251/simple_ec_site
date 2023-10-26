@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load mathfilters %}
+{% block content %}
+		<h3>{{ user.get_username }}'s cart</h3>
+		{% for item in items %}
+		<div>
+			<p style="display: inline-block;">{{ item.item.name }} - {{ item.quantity }} ${{ item.quantity|mul:item.item.price }}</p>
+			<form method='POST' action="{% url 'cart:remove' %}" style="display: inline-block;">
+				{% csrf_token %}
+				<input type="hidden" name="cart_item_id" value={{ item.id }}>
+				<button type="submit">remove from cart</button>
+			</form>
+		</div>
+		{% endfor %}
+		<p>Total: ${{ total_price }}</p>
+		<form method='POST' action="{% url 'cart:purchase' %}">
+			{% csrf_token %}
+			<button type="submit">purchase</button>
+		</form>
+{% endblock %}

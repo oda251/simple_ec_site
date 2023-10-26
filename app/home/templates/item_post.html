@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<form method="POST" action="{% url 'home:item_post' %}">
+		{% csrf_token %}
+		<input type="text" name="name" placeholder="name"><br>
+		<textarea name="description" placeholder="description"></textarea><br>
+		<input type="number" name="price" placeholder="price"><br>
+		<input type="number" name="quantity" placeholder="quantity"><br>
+		<button type="submit">Submit</button>
+	</form>
+{% endblock %}
