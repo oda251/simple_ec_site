@@ -31,8 +31,8 @@ RUN apt-get update && apt-get install -y \
 		mariadb-client \
 		&& rm -rf /var/lib/apt/lists/* \
 		&& apt-get clean \
-		&& pip install -U pip \
-		&& pip install -r requirements.txt
+		&& pip3 install -U pip \
+		&& pip3 install -r requirements.txt
 
 RUN rm -rf /var/cache/apk/* && \
     rm -rf /tmp/*
